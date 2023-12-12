@@ -21,7 +21,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        // 'first_name',
+        // 'last_name',
+        // 'username',
+        // 'phone_number',
+        // 'address',
+        // 'is_admin',
     ];
+
+    // protected $attributes = [
+    //     'is_admin' => false,
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.
