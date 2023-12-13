@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\OnboardingController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,18 +44,22 @@ Route::get('/bottom', function (){
  *
  *  */
 
-//create new users -business
-Route::post('/onboarding', [OnboardingController::class, 'store']);
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
-//login users - Business
-Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate']);
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/index');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
-//logout
-Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
-
-////onboarding Controller -show the veify email screen
-Route::get('/onboarding/verify-email', [OnboardingController::class, 'verify_email']);
-
+ 
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 //show the signup view
 Route::get('/signup', function (){
@@ -70,7 +76,20 @@ Route::get('login', function (){
     return view('login');
 });
 
+// Authenticated routes are here, only authenticated users would have access to this routes
+Route::middleware(['auth', 'verified'])->group(function () {
 
+//create new users -business
+Route::post('/onboarding', [OnboardingController::class, 'store']);
+
+//login users - Business
+Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate']);
+
+//logout
+Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
+
+////onboarding Controller -show the veify email screen
+Route::get('/onboarding/verify-email', [OnboardingController::class, 'verify_email']);
 
 //show the clients/customers
 Route::get('clients', function (){
@@ -89,4 +108,6 @@ Route::get('/dashboard', function () {
 //show invoice page
 Route::get('invoices', function (){
     return view('invoices');
+});
+
 });
