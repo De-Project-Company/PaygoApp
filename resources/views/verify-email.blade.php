@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
-</head>
-<body>
+<x-layout>
+    <x-slot name="title">PayGo Verify Email</x-slot>
 <div className="flex flex-col h-screen md:h-full py-10 px-4 justify-center items-center ">
     <div className="grid grid-rows-2 md:grid-cols-2 md:gap-x-40 text-center py-6 px-4">
         <!--verifcation  div -->
@@ -64,5 +57,4 @@
     </div>
 </div>
 
-</body>
-</html>
+</x-layout>
