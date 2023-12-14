@@ -27,6 +27,19 @@
                     @enderror
                 </div>
                 <div class="relative">
+                    <input
+                        type="tel"
+                        name="phone_number"
+                        class="mt-[28px] border border-[#D9D9D9] rounded-[13px] w-full pl-5 py-4 placeholder:text-[13px] placeholder:text-[#9E9E9E] placeholder:font-semibold outline-none placeholder:text-opacity-19"
+                        placeholder="Phone Number"
+                    />
+                    @error('phone_number')
+                    <p class="text-xs text-red-500 mt-1">
+                        {{$message}}
+                    </p>
+                    @enderror
+                </div>
+                <div class="relative">
                     <!-- <MdLockOutline class="absolute left-6 top-[42px] text-2xl" /> -->
                     <input
                         type="password"
@@ -41,13 +54,14 @@
                     @enderror
                 </div>
                 <div class="relative">
+                    <!-- <MdLockOutline class="absolute left-6 top-[42px] text-2xl" /> -->
                     <input
-                        type="tel"
-                        name="phone_number"
-                        class="mt-[28px] border border-[#D9D9D9] rounded-[13px] w-full pl-5 py-4 placeholder:text-[13px] placeholder:text-[#9E9E9E] placeholder:font-semibold outline-none placeholder:text-opacity-19"
-                        placeholder="Phone Number"
+                        type="password"
+                        name="password_confirmation"
+                        class="mt-[28px] border-[#D9D9D9] border rounded-[13px] w-full pl-5 py-4 placeholder:text-[13px] placeholder:text-[#9E9E9E] placeholder:font-semibold outline-none"
+                        placeholder="Confirm Password"
                     />
-                    @error('phone_number')
+                    @error('password')
                     <p class="text-xs text-red-500 mt-1">
                         {{$message}}
                     </p>
