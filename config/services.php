@@ -37,4 +37,5 @@ return [
         'redirect' => 'https://paygoapp.test/auth/facebook/callback',
     ],
 
+    
 ];
