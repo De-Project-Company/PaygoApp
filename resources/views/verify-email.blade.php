@@ -1,31 +1,31 @@
 <x-layout>
     <x-slot name="title">PayGo Verify Email</x-slot>
-<div className="flex flex-col h-screen md:h-full py-10 px-4 justify-center items-center ">
-    <div className="grid grid-rows-2 md:grid-cols-2 md:gap-x-40 text-center py-6 px-4">
+<div class="flex flex-col h-screen md:h-full py-10 px-4 justify-center items-center ">
+    <div class="grid grid-rows-2 md:grid-cols-2 md:gap-x-40 text-center py-6 px-4">
         <!--verifcation  div -->
-        <div className="flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center justify-center">
             <!-- rext div -->
-            <div className="py-12">
-                <p className="text-xl font-bold">
+            <div class="py-12">
+                <p class="text-xl font-bold">
                     Get a Verification Code
                 </p>
-                <p className="text-xs font-semibold">A verification code has been sent to your email.</p>
+                <p class="text-xs font-semibold">A verification code has been sent to your email.</p>
             </div>
             <!-- end of text div -->
-            <div className="relative flex my-10 items-center  w-56 h-10 border border-black rounded-3xl border-opacity-30 ">
-                <input type="email" value="Johndoe@gmail.com" className="flex-1 h-full border-r  opacity-90 border-inherit text-center text-xs  bg-inherit focus:ring-0 focus:outline-none" >
-                <a href="" className="text-blue-300 text-sm text-center font-bold self-center items-center flex-1 ">Change</a>
+            <div class="relative flex my-10 items-center  w-56 h-10 border border-black rounded-3xl border-opacity-30 ">
+                <input type="email" value="Johndoe@gmail.com" class="flex-1 h-full border-r  opacity-90 border-inherit text-center text-xs  bg-inherit focus:ring-0 focus:outline-none" >
+                <a href="" class="text-blue-300 text-sm text-center font-bold self-center items-center flex-1 ">Change</a>
             </div>
 
             <!-- verification input -->
-            <div className="flex flex-col my-6">
-                <div className="flex space-x-4">
-                    <input type="text" maxlength="1" className="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
-                    <input type="text" maxlength="1" className="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
-                    <input type="text" maxlength="1" className="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
-                    <input type="text" maxlength="1" className="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
+            <div class="flex flex-col my-6">
+                <div class="flex space-x-4">
+                    <input type="text" maxlength="1" class="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
+                    <input type="text" maxlength="1" class="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
+                    <input type="text" maxlength="1" class="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
+                    <input type="text" maxlength="1" class="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
                 </div>
-                <p className="font-semibold text-right text-sm py-3">Resend in <span className="text-red-600">15s</span></p>
+                <p class="font-semibold text-right text-sm py-3">Resend in <span class="text-red-600">15s</span></p>
             </div>
             <!-- end of verification input -->
 
@@ -33,7 +33,7 @@
         <!-- end of verification div -->
 
         <!--  image and button div -->
-        <div className="flex flex-col  items-center space-y-5 ">
+        <div class="flex flex-col  items-center space-y-5 ">
             <!-- developer man svg -->
             <svg width="241" height="219" viewBox="0 0 241 219" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="241" height="219" fill="url(#pattern0)"/>
@@ -48,7 +48,7 @@
             <!-- end of dveloper man svg -->
 
             <!-- verify button -->
-            <a href="" className="w-[211px] bg-blue-500 py-3 text-gray-50 px-10 rounded-2xl">Verify</a>
+            <a href="" class="w-[211px] bg-blue-500 py-3 text-gray-50 px-10 rounded-2xl">Verify</a>
 
             <!-- end of verify button -->
         </div>
