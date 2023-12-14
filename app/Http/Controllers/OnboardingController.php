@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
 
