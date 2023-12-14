@@ -5,11 +5,18 @@
         <!--verifcation  div -->
         <div class="flex flex-col items-center justify-center">
             <!-- rext div -->
+
             <div class="py-12">
                 <p class="text-xl font-bold">
                     Get a Verification Code
                 </p>
                 <p class="text-xs font-semibold">A verification code has been sent to your email.</p>
+            <div className="py-12">
+                <p className="text-xl font-bold">
+                    Verify Your Email Address
+                </p>
+                <p className="text-xs font-semibold">Before proceeding, please check your email for a verification link.</p>
+
             </div>
             <!-- end of text div -->
             <div class="relative flex my-10 items-center  w-56 h-10 border border-black rounded-3xl border-opacity-30 ">
@@ -25,7 +32,16 @@
                     <input type="text" maxlength="1" class="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
                     <input type="text" maxlength="1" class="text-3xl w-10 h-10 border-b-2 border-gray-500 text-center focus:outline-none"/>
                 </div>
+
                 <p class="font-semibold text-right text-sm py-3">Resend in <span class="text-red-600">15s</span></p>
+                <div className="py-12">
+                    <p className="text-xs font-semibold">If you did not receive the email</p>
+                </div>
+                <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Click here to request another</button>
+                </form>
+                {{-- <p className="font-semibold text-right text-sm py-3">Resend in <span className="text-red-600">15s</span></p> --}}
             </div>
             <!-- end of verification input -->
 
@@ -49,6 +65,9 @@
 
             <!-- verify button -->
             <a href="" class="w-[211px] bg-blue-500 py-3 text-gray-50 px-10 rounded-2xl">Verify</a>
+
+            {{-- <a href="" className="w-[211px] bg-blue-500 py-3 text-gray-50 px-10 rounded-2xl">Verify</a> --}}
+
 
             <!-- end of verify button -->
         </div>
