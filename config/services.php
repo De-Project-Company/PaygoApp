@@ -36,6 +36,5 @@ return [
         'client_secret' => 'ffef75fae09902f149f3e7877d307772',
         'redirect' => 'https://paygoapp.test/auth/facebook/callback',
     ],
-
     
 ];

@@ -2,11 +2,10 @@
 
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\FacebookController;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,6 +82,15 @@ Route::post('/onboarding', [OnboardingController::class, 'store']);
 //login users - business
 Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate']);
 
+//facebook login route --start--
+
+//displays the facebook page for login
+Route::get('auth/facebook', [SocialController::class, 'loginWithFacebook'])->name('facebook.login');
+
+//facebook login route - logs user in using facebook
+Route::get('auth/facebook/callback', [SocialController::class, 'facebookRedirect']);
+
+//facebook login route --end--
 
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
