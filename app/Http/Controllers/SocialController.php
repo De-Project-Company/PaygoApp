@@ -56,9 +56,9 @@ class SocialController extends Controller
         try {
 
             $user = Socialite::driver('google')->user();
-            $isUser = User::where('google_id', $user->id)->first();
+            $isUser = User::where('email', $user->email)->first();
 
-            if($user){
+            if($isUser){
 
                 Auth::login($isUser);
                 return redirect('/dashboard');
