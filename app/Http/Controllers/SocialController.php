@@ -24,9 +24,12 @@ class SocialController extends Controller
             $isUser = User::where('facebook_id', $user->id)->first();
      
             if($isUser){
+
                 Auth::login($isUser);
                 return redirect('/dashboard');
+
             }else{
+
                 $createUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
@@ -35,11 +38,47 @@ class SocialController extends Controller
                 ]);
     
                 Auth::login($createUser);
-                return redirect('dashboard');
+                return redirect('/dashboard');
             }
     
         } catch (Exception $exception) {
             dd($exception->getMessage());
         }
     }
+
+    public function loginWithGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleRedirect()
+    {
+        try {
+
+            $user = Socialite::driver('google')->user();
+            $isUser = User::where('google_id', $user->id)->first();
+
+            if($isUser){
+
+                Auth::login($isUser);
+                return redirect('/dashboard');
+
+            }else{
+
+                $createUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'google_id' => $user->id,
+                    'password' => Hash::make($user->password)
+                ]);
+
+                Auth::login($createUser);
+                return redirect('/dashboard');
+
+            }
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+        }
+    }
+
 }

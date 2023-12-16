@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +27,9 @@ class OnboardingController extends Controller
         $user = User::create($formData);
 
         event(new Registered($user));
+
         auth()->login($user);
+        $request->session()->regenerate();
 
         return redirect('/onboarding/verify');
     }
@@ -44,15 +47,32 @@ class OnboardingController extends Controller
     }
 
     //this will validate users when they try to login
-    public function authenticate()
+    public function authenticate(Request $request)
     {
+        $formData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
+        if(Auth::attempt($formData))
+        {
+            $request->session()->regenerate();
+            return redirect('/dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'Credentials do not match what is in our records!',
+        ])->onlyInput('email');
     }
 
     //this will log out users
-    public function logout()
+    public function logout(Request $request)
     {
-
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')
+            ->withSuccess('You have logged out successfully!');
     }
 
 }

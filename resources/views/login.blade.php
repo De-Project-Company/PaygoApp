@@ -8,9 +8,14 @@
             <form method="POST" action="/onboarding/authenticate"
                 class="flex flex-col text-center  items-center space-y-6">
                 @csrf
-                <input type="text" name="email" class="leading-[19.5px] text-[13px] font-semibold border border-[#00000069] focus:outline-none rounded-[13px] h-[51px] w-[332px] px-3" placeholder="Email">
+                <input type="text" name="email" class="leading-[19.5px] text-[13px] font-semibold border border-[#00000069] focus:outline-none rounded-[13px] h-[51px] w-[332px] px-3" placeholder="Email" value="{{old('email')}}">
+                    @error('email')
+                        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                    @enderror
                 <input type="password" name="password" class="leading-[19.5px] rounded-[13px] text-[13px] font-semibold border focus:outline-none border-[#00000069] h-[51px] w-[332px] px-3" placeholder="Password">
-
+                    @error('password')
+                        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                    @enderror
 
                 <!-- signin button -->
                 <div class="flex flex-col my-10 items-center text-center ">
@@ -44,7 +49,7 @@
                 <!-- end of apple  -->
 
                 <!-- google svg -->
-                <form class="d-inline" method="GET" action="">
+                <form class="d-inline" method="GET" action="{{ route('google.login') }}">
                     @csrf
                     <label>
                         <span class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center">

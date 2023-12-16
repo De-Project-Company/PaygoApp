@@ -80,7 +80,7 @@ Route::get('/login', [OnboardingController::class, 'showLoginForm'])->name('logi
 Route::post('/onboarding', [OnboardingController::class, 'store']);
 
 //login users - business
-Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate']);
+Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate'])->name('authenticate');
 
 //facebook login route --start--
 
@@ -92,13 +92,21 @@ Route::get('auth/facebook/callback', [SocialController::class, 'facebookRedirect
 
 //facebook login route --end--
 
+//google login routes --start--
+
+Route::get('auth/google', [SocialController::class, 'loginWithGoogle'])->name('google.login');
+
+Route::get('auth/google/callback', [SocialController::class, 'googleRedirect']);
+
+//google login routes --end--
+
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
-
-//show the dashboard for the logged-in user
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+    
+    //show the dashboard for the logged-in user
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
 
 //logout
 Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
