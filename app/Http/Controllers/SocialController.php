@@ -21,7 +21,7 @@ class SocialController extends Controller
         try {
 
             $user = Socialite::driver('facebook')->user();
-            $isUser = User::where('facebook_id', $user->id)->first();
+            $isUser = User::where('email', $user->email)->first();
 
             if($isUser){
 
@@ -33,8 +33,8 @@ class SocialController extends Controller
                 $createUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'fb_id' => $user->id,
-                    'password' => Hash::make($user->password)
+                    'facebook_id' => $user->id,
+                    'email_verified_at' => date('Y-m-d H:i:s'),
                 ]);
 
                 Auth::login($createUser);
@@ -69,7 +69,7 @@ class SocialController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id' => $user->id,
-                    'password' => Hash::make($user->password)
+                    'email_verified_at' => date('Y-m-d H:i:s'),
                 ]);
 
                 Auth::login($createUser);
