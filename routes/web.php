@@ -49,7 +49,9 @@ Route::get('/bottom', function (){
 //  all email authentication routes -- start --
 
 //this will return a view instructing the user to click the email verification link that was emailed to them
-Route::get('/email/verify')->middleware('auth')->name('verification.notice');
+Route::get('/email/verify', function () {
+    return view('verify');
+})->middleware('auth')->name('verification.notice');
 
 //handles request generated when the user clicks the email verification link
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
