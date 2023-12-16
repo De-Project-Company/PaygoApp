@@ -16,7 +16,7 @@ class SocialController extends Controller
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function facebookRedirect() 
+    public function facebookRedirect()
     {
         try {
     
