@@ -3,11 +3,11 @@
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,20 +110,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     });
 
-//logout
-Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
+    //logout
+    Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
 
-//show the clients/customers
-Route::get('clients', function (){
-    return view('customers');
-});
+    //show the clients/customers
+    Route::get('clients', function (){
+        return view('customers');
+    });
 
-//show the view for adding new clients
-Route::get('/add-clients', [CustomersController::class, 'index']);
+    //show the view for adding new clients
+    Route::get('/add-clients', [CustomersController::class, 'index']);
 
-//show invoice page
-Route::get('invoices', function (){
-    return view('invoices');
-});
+    // --------Invoice Route Starts Here ----------\\
+    //show invoice page
+    Route::get('/invoices', [InvoiceController::class, 'index']);
+    
+    Route::get('/invoices/create', [InvoiceController::class, 'create']);
+
+    Route::post('/invoices', [InvoiceController::class, 'store']);
+    
+    Route::get('/invoices/{invoice}/generate',[InvoiceController::class,'generatePDF']);
+
+    Route::get('/invoices/{invoice}/mail/{email}',[InvoiceController::class,'sendMail']);
+    
+    Route::get('/invoices/{invoice}',[InvoiceController::class,'show']);
 
 });
