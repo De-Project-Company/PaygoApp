@@ -22,7 +22,7 @@
                     <input type="submit" value="Sign In" class=" my-4 w-[211px] h-[44px] px-[42px] py-[12px] rounded-2xl bg-blue-500 text-white font-semibold text-[13px] leading-[19.5px]">
                     <!-- signin button -->
 
-                    <p class="text-[13px] text-[#3676E0] py-1 font-semibold leading-[16.5px] align-middle w-[173px] h-[43px]">Forgot Password?</p>
+                    <a href="{{route('forgot.password')}}"><p class="text-[13px] text-[#3676E0] py-1 font-semibold leading-[16.5px] align-middle w-[173px] h-[43px]">Forgot Password?</p></a>
                 </div>
             </form>
             <!-- sign in form -->

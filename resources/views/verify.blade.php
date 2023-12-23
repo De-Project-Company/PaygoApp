@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="title">PayGo Verify Email</x-slot>
-<div class="flex flex-col h-screen md:h-full py-10 px-4 justify-center items-center ">
+<div class="flex flex-col h-screen md:h-full py-10 px-4 justify-center">
     <div class="grid grid-rows-2 md:grid-cols-2 md:gap-x-40 text-center py-6 px-4">
         <!--verifcation  div -->
         <div class="flex flex-col items-center justify-center">

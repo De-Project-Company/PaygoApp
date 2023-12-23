@@ -67,22 +67,34 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 //  all email authentication routes -- end --
 
+//onboarding Controller - display the veify email screen
+Route::get('/onboarding/verify', [OnboardingController::class, 'verify_email']);
+
 //display the signup view
 Route::get('/signup', function (){
     return view('signup');
 });
 
-//onboarding Controller - display the veify email screen
-Route::get('/onboarding/verify', [OnboardingController::class, 'verify_email']);
+//create new users - business
+Route::post('/onboarding', [OnboardingController::class, 'store']);
 
 //display login view
 Route::get('/login', [OnboardingController::class, 'showLoginForm'])->name('login');
 
-//create new users - business
-Route::post('/onboarding', [OnboardingController::class, 'store']);
-
 //login users - business
 Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate'])->name('authenticate');
+
+//displays the reset password view
+Route::get('/forgot-password', [OnboardingController::class, 'forgotPasswordView'])->name('forgot.password');
+
+//handles sending reset password link via mail
+Route::post('/forgot-password', [OnboardingController::class, 'resetPasswordRequest'])->name('reset.password.request');
+
+//displays reset password view after user clicks on the link sent via mail
+Route::get('/reset-password/{token}', [OnboardingController::class, 'resetPasswordView'])->name('reset.password.view');
+
+//handles the pasword reset logic
+Route::post('/reset-password', [OnboardingController::class, 'resetPassword'])->name('reset.password');
 
 //facebook login route --start--
 
