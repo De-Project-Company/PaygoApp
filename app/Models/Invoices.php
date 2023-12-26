@@ -9,6 +9,11 @@ class Invoices extends Model
 {
     use HasFactory;
 
+    public function items()
+    {
+        return $this->hasMany(InvoiceItems::class);
+    }
+
     public function scopeFilter($query, array $filters){
        
         if ($filters['search'] ?? false) {
@@ -20,13 +25,14 @@ class Invoices extends Model
     }
 
     protected $fillable = [
-        'invoice_item', 
-        'invoice_quantity', 
-        'invoice_unit_cost', 
-        'invoice_number', 
         'customer', 
         'invoice_due_date', 
-        'invoice_note'
+        'invoice_note',
+        'invoice_vat',
+        'invoice_discount',
+        'payment_method',
+        'invoice_number',
+        'invoice_total'
     ];
 
 }

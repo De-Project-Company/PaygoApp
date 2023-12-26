@@ -23,7 +23,7 @@ namespace App\Mail;
                 $pdfPath = storage_path("app/public/invoices/{$invoice->invoice_number}.pdf");
 
                 return $this->subject('Invoice Email')
-                    ->view('invoices.invoice-pdf', [
+                    ->view('invoices.email-template', [
                         'invoice' => $invoice
                     ])
                     ->attach($pdfPath, [

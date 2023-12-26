@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_item');
-            $table->string('invoice_quantity');
-            $table->string('invoice_unit_cost');
-            $table->string('invoice_number');
+            $table->string('invoice_number')->unique();
             $table->string('customer');
-            $table->string('invoice_due_date');
-            $table->string('invoice_note');
-            $table->timestamps();
+            $table->date('invoice_due_date');
+            $table->string('invoice_note')->nullable();
+            $table->decimal('invoice_vat', 10, 2); // Adjust precision as needed
+            $table->decimal('invoice_discount', 10, 2); // Adjust precision as needed
+            $table->decimal('invoice_total', 10, 2); // Adjust precision as needed
+            $table->string('payment_method');
+            $table->timestamps(); // If you don't need timestamps, you can remove this line
         });
     }
+
 
     /**
      * Reverse the migrations.

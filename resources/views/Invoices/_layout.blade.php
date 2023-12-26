@@ -1,3 +1,4 @@
+{{-- This page holds the layout for the invoice page --}}
 <x-layout>
     <x-slot name="title">PayGo - @yield('title')</x-slot>
     @include('partials._nav-menu')

@@ -129,10 +129,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/invoices', [InvoiceController::class, 'store']);
     
-    Route::get('/invoices/{invoice}/generate',[InvoiceController::class,'generatePDF']);
-
     Route::get('/invoices/{invoice}/mail/{email}',[InvoiceController::class,'sendMail']);
     
-    Route::get('/invoices/{invoice}',[InvoiceController::class,'show']);
+    
+    Route::get('/invoices/{invoice}/edit',[InvoiceController::class,'edit']);
+
+    Route::put('/invoices/{invoice}',[InvoiceController::class,'update']);
+
+    Route::delete('/invoices/{invoice}',[InvoiceController::class,'destroy']);
+
+    Route::get('/invoices/{invoice}',[InvoiceController::class,'show'])->name('invoices.show');
 
 });

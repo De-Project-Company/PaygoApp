@@ -14,7 +14,7 @@
 @endif
 
 @foreach ($invoices as $invoice)
-    <p>{{ $invoice->invoice_item }}</p>
+    <p>{{ $invoice->invoice_number}}</p>
 @endforeach
 </div>
 

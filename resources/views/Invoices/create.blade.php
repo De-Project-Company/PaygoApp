@@ -1,45 +1,83 @@
+{{-- Add the form for creating an invoice here --}}
 @extends('Invoices._layout');
 @section('title', "add invoice")
 @section('content')
+
 <div class="flex justify-center flex-col items-center text-center">
-<form action="/invoices" method="post">
-    @csrf
-    <div class="form-group">
-        <label for="invoice_item">Invoice Item:</label>
-        <input type="text" name="invoice_item" class="form-control" required>
-    </div>
+    {{-- Start here --}}
 
-    <div class="form-group">
-        <label for="invoice_quantity">Quantity:</label>
-        <input type="number" name="invoice_quantity" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="invoice_unit_cost">Unit Cost:</label>
-        <input type="number" name="invoice_unit_cost" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="invoice_number">Invoice Number:</label>
-        <input type="text" name="invoice_number" class="form-control" required>
-    </div>
-
-    <div class="form-group">
+    <form action="/invoices" method="POST">
+        @csrf
+    
+        <!-- Invoice details -->
         <label for="customer">Customer:</label>
-        <input type="text" name="customer" class="form-control" required>
-    </div>
+        <input type="text" name="customer" required>
 
-    <div class="form-group">
         <label for="invoice_due_date">Due Date:</label>
-        <input type="date" name="invoice_due_date" class="form-control" required>
-    </div>
+        <input type="date" name="invoice_due_date" required>
 
-    <div class="form-group">
-        <label for="invoice_note">Note:</label>
-        <textarea name="invoice_note" class="form-control"></textarea>
-    </div>
+        <label for="invoice_note">Invoice Note:</label>
+        <textarea name="invoice_note"></textarea>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <label for="invoice_vat">Invoice VAT:</label>
+        <input type="number" name="invoice_vat" required step="0.01">
+
+        <label for="invoice_discount">Invoice Discount:</label>
+        <input type="number" name="invoice_discount" required step="0.01">
+
+        <label for="payment_method">Payment Method:</label>
+        <input type="text" name="payment_method" required>
+    
+        <!-- Other invoice fields -->
+    
+        <!-- Invoice items -->
+        <div id="items-container">
+            <div class="item">
+                <label for="items[0][description]">Item Description:</label>
+                <input type="text" name="items[0][description]" required>
+    
+                <label for="items[0][quantity]">Quantity:</label>
+                <input type="number" name="items[0][quantity]" required>
+    
+                <label for="items[0][unit_cost]">Unit Cost:</label>
+                <input type="number" name="items[0][unit_cost]" required>
+    
+                <!-- Other item fields -->
+            </div>
+    
+            <div class="item">
+                <!-- Repeat similar structure for each item -->
+            </div>
+        </div>
+    
+        <button type="button" id="add-item">Add Item</button>
+    
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script>
+        document.getElementById('add-item').addEventListener('click', function () {
+            var itemsContainer = document.getElementById('items-container');
+            var newItem = document.createElement('div');
+            newItem.className = 'item';
+    
+            newItem.innerHTML = `
+                <label for="items[${itemsContainer.children.length}][description]">Item Description:</label>
+                <input type="text" name="items[${itemsContainer.children.length}][description]" required>
+    
+                <label for="items[${itemsContainer.children.length}][quantity]">Quantity:</label>
+                <input type="number" name="items[${itemsContainer.children.length}][quantity]" required>
+    
+                <label for="items[${itemsContainer.children.length}][unit_cost]">Unit Cost:</label>
+                <input type="number" name="items[${itemsContainer.children.length}][unit_cost]" required>
+    
+                <!-- Other item fields -->
+            `;
+    
+            itemsContainer.appendChild(newItem);
+        });
+    </script>
+    
+
 </div>
 @endsection
