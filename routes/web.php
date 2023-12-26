@@ -123,16 +123,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // --------Invoice Route Starts Here ----------\\
     //show invoice page
-    Route::get('/invoices', [InvoiceController::class, 'index']);
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     
-    Route::get('/invoices/create', [InvoiceController::class, 'create']);
+    Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
 
     Route::post('/invoices', [InvoiceController::class, 'store']);
     
     Route::get('/invoices/{invoice}/mail/{email}',[InvoiceController::class,'sendMail']);
     
     
-    Route::get('/invoices/{invoice}/edit',[InvoiceController::class,'edit']);
+    Route::get('/invoices/{invoice}/edit',[InvoiceController::class,'edit'])->name('invoices.edit');
 
     Route::put('/invoices/{invoice}',[InvoiceController::class,'update']);
 
