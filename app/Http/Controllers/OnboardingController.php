@@ -39,10 +39,10 @@ class OnboardingController extends Controller
     }
 
     //this will come up after user has been stored, telling them to check their email for the verification link
-    public function verify_email()
-    {
-        return view('verify');
-    }
+    // public function verify_email()
+    // {
+    //     return view('verify');
+    // }
 
     //this will display the login form
     public function showLoginForm()
@@ -50,7 +50,7 @@ class OnboardingController extends Controller
         return view('login');
     }
 
-    //this will validate users when they try to login
+    //this will validate users when they try to login user
     public function authenticate(Request $request)
     {
         $formData = $request->validate([
@@ -134,6 +134,30 @@ class OnboardingController extends Controller
         DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
 
         return redirect()->to(route('login'))->with('success', 'Password reset successfully!');
+    }
+
+    public function editBusiness(User $user) 
+    {
+        return view('editbusiness', ['user' => $user]);
+    }
+
+    public function updateBusiness(Request $request, User $user) 
+    {
+        if($user->id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
+        $formFields = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+            'business_name' => 'required|',
+            'company_email' => 'email',
+        ]);
+
+        $user->update($formFields);
+
+        return back()->with('message', 'Business Info Updated Successfully!');
     }
 
 }

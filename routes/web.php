@@ -93,7 +93,7 @@ Route::post('/forgot-password', [OnboardingController::class, 'resetPasswordRequ
 //displays reset password view after user clicks on the link sent via mail
 Route::get('/reset-password/{token}', [OnboardingController::class, 'resetPasswordView'])->name('reset.password.view');
 
-//handles the pasword reset logic
+//handles the password reset logic
 Route::post('/reset-password', [OnboardingController::class, 'resetPassword'])->name('reset.password');
 
 //facebook login route --start--
@@ -122,20 +122,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     });
 
-//logout
-Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
+    //logout
+    Route::post('/onboarding/logout', [OnboardingController::class, 'logout']);
 
-//show the clients/customers
-Route::get('clients', function (){
-    return view('customers');
-});
+    //displays the edit form
+    Route::get('/business/{business-info}/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
 
-//show the view for adding new clients
-Route::get('/add-clients', [CustomersController::class, 'index']);
+    //updates business info
+    Route::put('/business/{business-info}', [OnboardingController::class, 'updateBusiness'])->name('update.business');
 
-//show invoice page
-Route::get('invoices', function (){
-    return view('invoices');
-});
+    //handles the storing/updating of business profile
+    Route::post('/update/business/profile', [OnboardingController::class, 'updateBusinessProfile'])->name('update.business.profile');
+
+    //show the clients/customers
+    Route::get('clients', function (){
+        return view('customers');
+    });
+
+    //show the view for adding new clients
+    Route::get('/add-clients', [CustomersController::class, 'index']);
+
+    //show invoice page
+    Route::get('invoices', function (){
+        return view('invoices');
+    });
 
 });

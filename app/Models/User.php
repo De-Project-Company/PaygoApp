@@ -25,13 +25,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'email_verified_at',
         'business_name',
+        'business_address',
         'company_email',
         'remember_token',
         'created_at',
         'updated_at',
         'password',
         'facebook_id',
-        ''
     ];
 
     /**
