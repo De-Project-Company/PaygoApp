@@ -78,6 +78,6 @@
     <div class="invoice-total">
         <p><strong>Extra Charges:</strong> {{ number_format($invoice->invoice_vat,'2') }}</p>
         <p><strong>Discount Applied:</strong> {{ number_format($invoice->invoice_discount,'2') }}</p>
-        <p><strong>Total Amount:</strong> {{ number_format(($total + $invoice->invoice_vat) - $invoice->invoice_discount,'2') }}</p>
+        <p><strong>Total Amount:</strong> {{ number_format(max(($total + $invoice->invoice_vat) - $invoice->invoice_discount, 0), '2') }}</p>
     </div>
 </section>

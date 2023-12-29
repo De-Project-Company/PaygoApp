@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
     
     class InvoiceController extends Controller
     {
+
+
         public function create()
         {
             return view('invoices.create');
@@ -27,18 +29,29 @@ use Illuminate\Support\Facades\Validator;
             ]);
         }
 
-        public function index(){
-            return view('Invoices.index',[
-                'invoices' => Invoices::latest()->filter(request(['tag','search']))->paginate(10),
-            ]);
+        // InvoiceController.php
+        public function index()
+        {
+            $invoices = Invoices::where('user_id', auth()->id())
+                ->latest()
+                ->filter(request(['tag', 'search']))
+                ->paginate(10);
+
+            return view('Invoices.index', ['invoices' => $invoices]);
         }
+
+        
     
-        public function show(Invoices $invoice){
-            // $invoice->load('items');
-            return view('Invoices.show',[
-                'invoice' => $invoice
-               ]);
+        public function show(Invoices $invoice) {
+            try {
+                $invoice = Invoices::where('user_id', auth()->id())->findOrFail($invoice->id);
+        
+                return view('Invoices.show', ['invoice' => $invoice]);
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                return redirect()->route('invoices.index')->with('error', 'Invoice not found.');
+            }
         }
+        
 
         // Adding invoice and related methods
 
@@ -53,6 +66,9 @@ use Illuminate\Support\Facades\Validator;
         {
             $data = $this->validateInvoiceData($request);
 
+            // Associate the user with the invoice
+            $data['user_id'] = auth()->id();
+
             $invoice = $this->generateUniqueInvoice($data);
 
             $itemsData = $request->input('items');
@@ -60,12 +76,12 @@ use Illuminate\Support\Facades\Validator;
             $this->createInvoiceItems($invoice, $itemsData);
 
             $this->generatePDF($invoice);
-            // $this->sendMail($invoice, 'ckamsi04@gmail.com');
 
             $invoiceId = $invoice->id;
 
             return redirect()->route('invoices.show', ['invoice' => $invoice->id])->with('success', 'Invoice added successfully!');
         }
+
 
         private function validateInvoiceData(Request $request)
         {

@@ -9,6 +9,12 @@ class Invoices extends Model
 {
     use HasFactory;
 
+    
+    private function createdBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function items()
     {
         return $this->hasMany(InvoiceItems::class);
@@ -26,6 +32,7 @@ class Invoices extends Model
 
     protected $fillable = [
         'customer', 
+        'user_id', 
         'invoice_due_date', 
         'invoice_note',
         'invoice_vat',
