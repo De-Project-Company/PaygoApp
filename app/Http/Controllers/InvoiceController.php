@@ -210,7 +210,7 @@ use Illuminate\Support\Facades\Validator;
         
             // Update the related items
             $this->updateItems($request, $invoice);
-        
+            $this->generatePDF($invoice);
             return redirect()->route('invoices.show', ['invoice' => $invoice->id])->with('success', 'Invoice and items updated successfully!');
         }
         

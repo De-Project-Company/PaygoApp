@@ -14,7 +14,7 @@
 @endif
 
 @foreach ($invoices as $invoice)
-    <p>{{ $invoice->invoice_number}}</p>
+    <a href="/invoices/{{$invoice->id}}"><p>{{ $invoice->invoice_number}}</p></a>
 @endforeach
 </div>
 
