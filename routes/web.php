@@ -113,6 +113,8 @@ Route::get('auth/google', [SocialController::class, 'loginWithGoogle'])->name('g
 Route::get('auth/google/callback', [SocialController::class, 'googleRedirect']);
 
 //google login routes --end--
+//displays the edit form
+Route::get('/business/{user}/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
 
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -125,14 +127,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //logout
     Route::post('/onboarding/logout', [OnboardingController::class, 'logout']);
 
-    //displays the edit form
-    Route::get('/business/{business-info}/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
+    // //displays the edit form
+    Route::get('/business/{user}/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
 
     //updates business info
-    Route::put('/business/{business-info}', [OnboardingController::class, 'updateBusiness'])->name('update.business');
-
-    //handles the storing/updating of business profile
-    Route::post('/update/business/profile', [OnboardingController::class, 'updateBusinessProfile'])->name('update.business.profile');
+    Route::put('/business/{user}', [OnboardingController::class, 'updateBusiness'])->name('update.business');
 
     //show the clients/customers
     Route::get('clients', function (){

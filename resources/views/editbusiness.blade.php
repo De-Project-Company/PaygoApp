@@ -6,9 +6,9 @@
                         <p class="mb-4">Edit: {{$user->business_name}}</p>
                     </header>
 
-                    <form method="POST" action="/business/{{$user->id}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('update.business', $user) }}" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        {{-- @method('PUT') --}}
                         <div class="mb-6">
                             <label
                                 for="name"
@@ -92,8 +92,8 @@
                         </div>
 
                         <div class="mb-6">
-                            <button
-                                class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
+                            <button type="submit"
+                                class=""
                             >
                                 Update
                             </button>

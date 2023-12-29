@@ -136,9 +136,10 @@ class OnboardingController extends Controller
         return redirect()->to(route('login'))->with('success', 'Password reset successfully!');
     }
 
-    public function editBusiness(User $user) 
+    public function editBusiness(User $user)
     {
         return view('editbusiness', ['user' => $user]);
+        // return view('editbusiness', compact('user'));
     }
 
     public function updateBusiness(Request $request, User $user) 
@@ -152,12 +153,12 @@ class OnboardingController extends Controller
             'email' => 'required|email',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
             'business_name' => 'required|',
-            'company_email' => 'email',
+            'company_email' => 'nullable|email',
         ]);
 
         $user->update($formFields);
 
-        return back()->with('message', 'Business Info Updated Successfully!');
+        return redirect()->to(route('/dashboard'))->with('success', 'Business Info Updated Successfully!');
     }
 
 }

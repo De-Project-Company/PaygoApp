@@ -71,7 +71,7 @@
                             src="{{asset('storage/images/payment-receipt-icon.svg')}}"
                             alt=""
                         />
-                        <a href="/business/{{$user->id}}/edit'" class="text-[14px]">Manage Business</a>
+                        <a href="{{ route('edit.business', $user) }}" class="text-[14px]">Manage Business</a>
                     </div>
 
 
