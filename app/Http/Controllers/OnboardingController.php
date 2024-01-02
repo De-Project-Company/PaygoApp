@@ -136,29 +136,30 @@ class OnboardingController extends Controller
         return redirect()->to(route('login'))->with('success', 'Password reset successfully!');
     }
 
-    public function editBusiness(User $user)
+    public function editBusiness()
     {
-        return view('editbusiness', ['user' => $user]);
-        // return view('editbusiness', compact('user'));
+        return view('editbusiness');
     }
 
-    public function updateBusiness(Request $request, User $user) 
+    public function updateBusiness(Request $request) 
     {
+        $user = Auth::user();
+
         if($user->id != auth()->id()) {
             abort(403, 'Unauthorized Action');
         }
 
         $formFields = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
-            'business_name' => 'required|',
-            'company_email' => 'nullable|email',
+            'name' => 'nullable',
+            'email' => 'nullable|email',
+            'phone_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+            'business_name' => 'nullable',
+            'company_email' => 'nullable|email|unique:users',
         ]);
 
+        /** @var \App\Models\User $user **/
         $user->update($formFields);
 
-        return redirect()->to(route('/dashboard'))->with('success', 'Business Info Updated Successfully!');
+        return back()->with('success', 'Business Info Updated Successfully!');
     }
-
 }

@@ -3,12 +3,12 @@
                         <h2 class="text-2xl font-bold uppercase mb-1">
                             Update Business Info
                         </h2>
-                        <p class="mb-4">Edit: {{$user->business_name}}</p>
+                        <p class="mb-4">Edit: {{Auth::user()->business_name}}</p>
                     </header>
 
-                    <form method="POST" action="{{ route('update.business', $user) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('update.business') }}" enctype="multipart/form-data">
                         @csrf
-                        {{-- @method('PUT') --}}
+                        @method('PUT')
                         <div class="mb-6">
                             <label
                                 for="name"
@@ -18,7 +18,7 @@
                             <input
                                 type="text"
                                 class="border border-gray-200 rounded p-2 w-full"
-                                name="name" value="{{$user->name}}" 
+                                name="name" value="{{Auth::user()->name}}" 
                             />
                             @error('name')
                                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -33,7 +33,7 @@
                                 type="email"
                                 class="border border-gray-200 rounded p-2 w-full"
                                 name="email"
-                                placeholder="example@gmail.com" value="{{$user->email}}" 
+                                placeholder="example@gmail.com" value="{{Auth::user()->email}}" 
                             />
 
                             @error('email')
@@ -50,7 +50,7 @@
                             <input
                                 type="tel"
                                 class="border border-gray-200 rounded p-2 w-full"
-                                name="location" value="{{$user->phone_number}}" 
+                                name="location" value="{{Auth::user()->phone_number}}" 
                             />
 
                             @error('phone_number')
@@ -65,7 +65,7 @@
                             <input
                                 type="text"
                                 class="border border-gray-200 rounded p-2 w-full"
-                                name="business_name" value="{{$user->business_nmae}}" 
+                                name="business_name" value="{{Auth::user()->business_name}}" 
                             />
 
                             @error('business_name')
@@ -83,18 +83,15 @@
                             <input
                                 type="email"
                                 class="border border-gray-200 rounded p-2 w-full"
-                                name="business_email" value="{{$user->business_email}}" 
-                            />
+                                name="company_email" value="{{Auth::user()->company_email}}"/>
 
-                            @error('business_email')
+                            @error('company_email')
                                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                             @enderror
                         </div>
 
                         <div class="mb-6">
-                            <button type="submit"
-                                class=""
-                            >
+                            <button type="submit">
                                 Update
                             </button>
 
