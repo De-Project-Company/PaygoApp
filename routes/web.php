@@ -128,10 +128,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/onboarding/logout', [OnboardingController::class, 'logout']);
 
     // //displays the edit form
-    Route::get('/business/{user}/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
+    Route::get('/business/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
 
     //updates business info
-    Route::put('/business/{user}', [OnboardingController::class, 'updateBusiness'])->name('update.business');
+    Route::put('/business', [OnboardingController::class, 'updateBusiness'])->name('update.business');
 
     //show the clients/customers
     Route::get('clients', function (){
