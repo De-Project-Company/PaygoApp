@@ -65,6 +65,15 @@
                         <a href="/payments-received" class="text-[14px]">Payments Received</a>
                     </div>
 
+                    <div class="flex flex-row justify-start py-1 items-center">
+                        <img
+                            class="w-[23px] h-[23px] mr-[7px]"
+                            src="{{asset('storage/images/payment-receipt-icon.svg')}}"
+                            alt=""
+                        />
+                        <a href="{{ route('edit.business') }}" class="text-[14px]">Manage Business</a>
+                    </div>
+
 
                 </div>
 

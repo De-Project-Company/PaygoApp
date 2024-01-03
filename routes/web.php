@@ -67,22 +67,34 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 //  all email authentication routes -- end --
 
+//onboarding Controller - display the veify email screen
+Route::get('/onboarding/verify', [OnboardingController::class, 'verify_email']);
+
 //display the signup view
 Route::get('/signup', function (){
     return view('signup');
 });
 
-//onboarding Controller - display the veify email screen
-Route::get('/onboarding/verify', [OnboardingController::class, 'verify_email']);
+//create new users - business
+Route::post('/onboarding', [OnboardingController::class, 'store']);
 
 //display login view
 Route::get('/login', [OnboardingController::class, 'showLoginForm'])->name('login');
 
-//create new users - business
-Route::post('/onboarding', [OnboardingController::class, 'store']);
-
 //login users - business
 Route::post('/onboarding/authenticate', [OnboardingController::class, 'authenticate'])->name('authenticate');
+
+//displays the reset password view
+Route::get('/forgot-password', [OnboardingController::class, 'forgotPasswordView'])->name('forgot.password');
+
+//handles sending reset password link via mail
+Route::post('/forgot-password', [OnboardingController::class, 'resetPasswordRequest'])->name('reset.password.request');
+
+//displays reset password view after user clicks on the link sent via mail
+Route::get('/reset-password/{token}', [OnboardingController::class, 'resetPasswordView'])->name('reset.password.view');
+
+//handles the password reset logic
+Route::post('/reset-password', [OnboardingController::class, 'resetPassword'])->name('reset.password');
 
 //facebook login route --start--
 
@@ -104,19 +116,24 @@ Route::get('auth/google/callback', [SocialController::class, 'googleRedirect']);
 
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    
+
     //show the dashboard for the logged-in user
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
 
-    //logout
-    Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
-
     //show the clients/customers
     Route::get('clients', function (){
         return view('customers');
     });
+
+    //show invoice page
+    Route::get('invoices', function (){
+        return view('invoices');
+    });
+
+    //logout
+    Route::post('/onboarding/logout', [OnboardingController::class, 'logout'] );
 
     //show the view for adding new clients
     Route::get('/add-clients', [CustomersController::class, 'index']);
@@ -124,14 +141,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --------Invoice Route Starts Here ----------\\
     //show invoice page
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
-    
+
     Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
 
     Route::post('/invoices', [InvoiceController::class, 'store']);
-    
+
     Route::get('/invoices/{invoice}/mail/{email}',[InvoiceController::class,'sendMail']);
-    
-    
+
+
     Route::get('/invoices/{invoice}/edit',[InvoiceController::class,'edit'])->name('invoices.edit');
 
     Route::put('/invoices/{invoice}',[InvoiceController::class,'update']);
@@ -139,5 +156,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/invoices/{invoice}',[InvoiceController::class,'destroy']);
 
     Route::get('/invoices/{invoice}',[InvoiceController::class,'show'])->name('invoices.show');
+
+    // //displays the edit form
+    Route::get('/business/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
+
+    //updates business info
+    Route::put('/business', [OnboardingController::class, 'updateBusiness'])->name('update.business');
+
 
 });
