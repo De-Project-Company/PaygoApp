@@ -154,7 +154,7 @@ class OnboardingController extends Controller
             'email' => 'nullable|email',
             'phone_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
             'business_name' => 'nullable',
-            'company_email' => 'nullable|email|unique:users',
+            'company_email' => 'nullable|email',
         ]);
 
         /** @var \App\Models\User $user **/
