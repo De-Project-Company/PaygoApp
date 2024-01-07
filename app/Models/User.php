@@ -34,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'facebook_id',
         'bank_name',
         'account_name',
-        'acount_number',
+        'account_number',
         'qr_code_data',
         'qr_code',
     ];

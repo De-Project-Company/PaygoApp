@@ -1,12 +1,13 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\OnboardingController;
-use App\Http\Controllers\SocialController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,14 +115,6 @@ Route::get('auth/google/callback', [SocialController::class, 'googleRedirect']);
 
 //google login routes --end--
 
-//displays the generate qrcode form
-Route::get('/qrcode-data', function() {
-    return view('generate-qrcode');
-});
-
-//displays the generate qrcode form
-Route::post('/generate-qrcode', [QrCodeController::class, 'generateQrCode'])->name('generate.qrcode');
-
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
     
@@ -133,11 +126,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //logout
     Route::post('/onboarding/logout', [OnboardingController::class, 'logout']);
 
-    // //displays the edit form
+    //displays the business edit form
     Route::get('/business/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
 
     //updates business info
     Route::put('/business', [OnboardingController::class, 'updateBusiness'])->name('update.business');
+
+    //displays the generate qrcode form
+    Route::get('/qrcode-data', function() {
+        return view('generate-qrcode');
+    })->name('qrcode.form');
+
+    //displays QrCode
+    Route::get('/qrcode', [QrCodeController::class, 'showQrCode'])->name('show.qrcode');
+
+    //generates qrcode
+    Route::post('/generate-qrcode', [QrCodeController::class, 'generateQrCode'])->name('generate.qrcode');
 
     //show the clients/customers
     Route::get('clients', function (){
