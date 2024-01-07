@@ -50,7 +50,7 @@
                             <input
                                 type="tel"
                                 class="border border-gray-200 rounded p-2 w-full"
-                                name="location" value="{{Auth::user()->phone_number}}" 
+                                name="phone_number" value="{{Auth::user()->phone_number}}" 
                             />
 
                             @error('phone_number')

@@ -113,8 +113,14 @@ Route::get('auth/google', [SocialController::class, 'loginWithGoogle'])->name('g
 Route::get('auth/google/callback', [SocialController::class, 'googleRedirect']);
 
 //google login routes --end--
-//displays the edit form
-Route::get('/business/{user}/edit', [OnboardingController::class, 'editBusiness'])->name('edit.business');
+
+//displays the generate qrcode form
+Route::get('/qrcode-data', function() {
+    return view('generate-qrcode');
+});
+
+//displays the generate qrcode form
+Route::post('/generate-qrcode', [QrCodeController::class, 'generateQrCode'])->name('generate.qrcode');
 
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
