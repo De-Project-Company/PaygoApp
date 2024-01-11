@@ -69,7 +69,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 //  all email authentication routes -- end --
 
 //onboarding Controller - display the veify email screen
-Route::get('/onboarding/verify', [OnboardingController::class, 'verify_email']);
+// Route::get('/onboarding/verify', [OnboardingController::class, 'verify_email']);
 
 //display the signup view
 Route::get('/signup', function (){

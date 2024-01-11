@@ -33,16 +33,10 @@ class OnboardingController extends Controller
         event(new Registered($user));
 
         auth()->login($user);
-        $request->session()->regenerate();
+        // $request->session()->regenerate();
 
-        return redirect('/onboarding/verify');
+        return redirect('/email/verify');
     }
-
-    //this will come up after user has been stored, telling them to check their email for the verification link
-    // public function verify_email()
-    // {
-    //     return view('verify');
-    // }
 
     //this will display the login form
     public function showLoginForm()

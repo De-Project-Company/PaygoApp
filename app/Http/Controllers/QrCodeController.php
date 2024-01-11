@@ -23,12 +23,12 @@ class QrCodeController extends Controller
             'account_name' => 'required',
             'account_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         ]);
-        $qrCodeData = "Bank Name: {$formData['bank_name']}, Account Name: {$formData['account_name']}, Account Number: {$formData['account_number']}";
+
+        $qrCodeData = "Bank Name: {$formData['bank_name']}\nAccount Name: {$formData['account_name']}\nAccount Number: {$formData['account_number']}";
         $fileName = 'qrcode_' . $user->id . '.png';
         $filePath = 'qrcodes/' . $fileName;
-
+        
         $qrCode = QrCode::size(300)->format('png')->generate($qrCodeData);
-
         Storage::put($filePath, $qrCode);
 
          /** @var \App\Models\User $user **/
@@ -42,6 +42,7 @@ class QrCodeController extends Controller
     public function showQrCode() 
     {
         $user = Auth::user();
+
         return view('qr-code', compact('user', 'user'));
     }
 }
