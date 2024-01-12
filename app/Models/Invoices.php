@@ -15,6 +15,12 @@ class Invoices extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function payment()
+    {
+        return $this->hasOne(Payments::class);
+    }
+
+
     public function items()
     {
         return $this->hasMany(InvoiceItems::class);
@@ -39,7 +45,8 @@ class Invoices extends Model
         'invoice_discount',
         'payment_method',
         'invoice_number',
-        'invoice_total'
+        'invoice_total',
+        'status',
     ];
 
 }

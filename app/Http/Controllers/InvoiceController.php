@@ -68,7 +68,7 @@ use Illuminate\Support\Facades\Validator;
 
             // Associate the user with the invoice
             $data['user_id'] = auth()->id();
-
+            $data['status'] = "issued";
             $invoice = $this->generateUniqueInvoice($data);
 
             $itemsData = $request->input('items');

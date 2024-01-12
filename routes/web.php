@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Log;
@@ -114,6 +115,13 @@ Route::get('auth/google/callback', [SocialController::class, 'googleRedirect']);
 
 //google login routes --end--
 
+// Payment routes outside the authentication middleware to enable customers to make payment
+Route::get('/payments/{invoice}/create/client',[PaymentController::class,'create'])->name('payments.create');
+Route::get('/payments/callback',[PaymentController::class,'callback'])->name('payments.callback');
+Route::get('/payments/success',[PaymentController::class,'success'])->name('payments.success');
+Route::get('/payments/failed',[PaymentController::class,'failed'])->name('payments.failed');
+// Payment routes end
+
 // Authenticated routes are here, only authenticated users would have access to this routes
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -163,5 +171,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //updates business info
     Route::put('/business', [OnboardingController::class, 'updateBusiness'])->name('update.business');
 
+    // Payment route with authentification to allow users view payments made to their business
+    Route::get('/payments',[PaymentController::class,'index'])->name('payments.index');
 
+        // On counter payment page assuming payment is made in cash
+    Route::get('/payments/{invoice}/create/cash',[PaymentController::class,'cash'])->name('payments.cash');
+    Route::get('/payments/{payment}',[PaymentController::class,'show'])->name('payments.show');
 });
