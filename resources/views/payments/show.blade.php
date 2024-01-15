@@ -8,5 +8,6 @@
         @method('DELETE')
         <button type="submit">Delete</button>
     </form>
+    <a href="/payments/{{ $payment->id }}/mail/ckamsi04@gmail.com">Send Payment Receipt</a>
 {{-- </div> --}}
 @endsection

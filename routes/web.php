@@ -176,5 +176,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // On counter payment page assuming payment is made in cash
     Route::get('/payments/{invoice}/create/cash',[PaymentController::class,'cash'])->name('payments.cash');
+    Route::post('/payments',[PaymentController::class,'store'])->name('payments.store');
+    
+    Route::get('/payments/{payment}/mail/{email}',[PaymentController::class,'sendMail']);
+
     Route::get('/payments/{payment}',[PaymentController::class,'show'])->name('payments.show');
 });

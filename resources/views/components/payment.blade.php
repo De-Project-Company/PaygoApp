@@ -23,7 +23,7 @@
 <div>
     <h2>Amount</h2>
     {{-- Currency should be added to d business --}}
-    <p>NGN {{ $payment->amount }}</p>
+    <p style="font-weight: bolder">NGN {{ number_format($payment->amount,'2') }}</p>
 
     <h2>{{ $payment->payment_status }}</h2>
     <table>

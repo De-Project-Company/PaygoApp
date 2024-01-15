@@ -80,6 +80,12 @@
     </div>
 
     <form action="/payments" method="post">
+        @csrf
+        <input type="hidden" value="{{ $invoice->id }}" name="invoice_id">
+        <input type="hidden" value="{{ $invoice->invoice_number }}" name="invoice_number">
+        <input type="hidden" value="{{ ($total + $invoice->invoice_vat) - $invoice->invoice_discount }}" name="amount">
+        <input type="hidden" value="Completed" name="payment_status">
+        <input type="hidden" value="Cash" name="channel">
         <input type="submit" value="Deposit" class="pay-button">
     </form>
 </div>
