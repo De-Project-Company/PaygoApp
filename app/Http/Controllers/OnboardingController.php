@@ -38,12 +38,6 @@ class OnboardingController extends Controller
         return redirect('/email/verify');
     }
 
-    //this will display the login form
-    public function showLoginForm()
-    {
-        return view('login');
-    }
-
     //this will validate users when they try to login user
     public function authenticate(Request $request)
     {
@@ -71,11 +65,6 @@ class OnboardingController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('login')
             ->withSuccess('You have logged out successfully!');
-    }
-
-    //displays the forgot password view
-    public function forgotPasswordView() {
-        return view('resetpassword');
     }
 
     //sends mail containing reset password link
