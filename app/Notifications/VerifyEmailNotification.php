@@ -11,12 +11,14 @@ class VerifyEmailNotification extends Notification
 {
     use Queueable;
 
+    protected $url;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($url)
     {
-        //
+        $this->url = $url;
     }
 
     /**
@@ -35,9 +37,12 @@ class VerifyEmailNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Verify Email Address')
+                    ->line('Thank you for registering with PayGo! To complete your registration, please verify your email address by clicking the link below:')
+                    ->action('Verify Email', $this->url)
+                    ->line('If you did not request this verification, please ignore this email. Your account will remain inactive until you verify your email address.')
+                    ->line('Thank you!')
+                    ->line('PayGo Team');
     }
 
     /**

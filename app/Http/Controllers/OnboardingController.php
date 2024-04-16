@@ -2,59 +2,89 @@
 
 namespace App\Http\Controllers;
 
+use App\Custom\Services\EmailVerificationService;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegistrationRequest;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Validator;
 
 
 class OnboardingController extends Controller
 {
 
-    //This will validate, handle the email verification call, and store user
-    public function store(Request $request)
+    public function __construct(private EmailVerificationService $service)
     {
-        $formData = $request->validate([
-            "email" => ['required', 'email', Rule::unique('users', 'email')],
-            "phone_number" => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
-            "password" => 'required|confirmed|min:6'
-        ]);
-
-        $formData['password'] = Hash::make($request->password);
-        $user = User::create($formData);
-
-        event(new Registered($user));
-
-        auth()->login($user);
-        // $request->session()->regenerate();
-
-        return redirect('/email/verify');
+        //
     }
 
-    //this will validate users when they try to login user
-    public function authenticate(Request $request)
+    /**
+     * 
+     * Register Method
+     * 
+     */
+    public function register(RegistrationRequest $request)
     {
-        $formData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $request['password'] = Hash::make($request->password);
+        $user = User::create($request->validated());
 
-        if(Auth::attempt($formData))
+        if($user)
         {
-            $request->session()->regenerate();
-            return redirect('/dashboard');
+            $this->service->sendVerificationLink($user);
+            $token = auth()->login($user);
+            return $this->responseWithToken($token, $user);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'An error occurred while trying to create user'
+            ], 500);
         }
+    }
 
-        return back()->withErrors([
-            'email' => 'Credentials do not match what is in our records!',
-        ])->onlyInput('email');
+    /**
+     * 
+     * Returns JWT access token
+     * 
+     */
+    public function responseWithToken($token, $user)
+    {
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'access_token' => $token,
+            'type' => 'bearer'
+        ]);
+    }
+
+    /**
+     * 
+     * Login Method
+     * 
+     */
+    public function login(LoginRequest $request)
+    {
+        $token = auth()->attempt($request->validated());
+
+        if($token)
+        {
+            return $this->responseWithToken($token, auth()->user());
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Invalid Credentials'
+            ], 401);
+        }
     }
 
     //this will log out users
