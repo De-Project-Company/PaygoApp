@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Profile\PasswordController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\OnboardingController;
 
 /*
@@ -20,14 +19,10 @@ use App\Http\Controllers\OnboardingController;
 //     return $request->user();
 // });
 
-// Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->name('emailverification.notification');
-
-// Route::get('email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('emailverification.verify');
-
-// Route::get('email/resend', [EmailVerificationController::class, 'resend'])->name('emailverification.resend');
-
 Route::post('auth/register', [OnboardingController::class, 'register']);
 Route::post('auth/login', [OnboardingController::class, 'login']);
+Route::post('auth/verify_user_email', [OnboardingController::class, 'verifyUserEmail']);
+Route::post('auth/resend_email_verification_link', [OnboardingController::class, 'resendEmailVerificationLink']);
 
 Route::group([
     "middleware" => ["auth:api"]
@@ -35,6 +30,7 @@ Route::group([
 {
     Route::get('dashboard', [OnboardingController::class, 'profile']);
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
+    Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
     Route::get('logout', [OnboardingController::class, 'logout']);
 
 });

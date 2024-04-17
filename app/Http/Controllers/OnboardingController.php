@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Custom\Services\EmailVerificationService;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
+use App\Http\Requests\ResendEmailVerificationRequest;
+use App\Http\Requests\VerifyEmailRequest;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
@@ -85,6 +87,26 @@ class OnboardingController extends Controller
                 'message' => 'Invalid Credentials'
             ], 401);
         }
+    }
+
+    /**
+     * 
+     * Resend Email Verification Link
+     * 
+     */
+    public function resendEmailVerificationLink(ResendEmailVerificationRequest $request)
+    {
+        return $this->service->resendVerificationLink($request->email);
+    }
+
+    /**
+     * 
+     * Verify User Email
+     * 
+     */
+    public function verifyUserEmail(VerifyEmailRequest $request)
+    {
+        return $this->service->verifyEmail($request->email, $request->token);
     }
 
     //this will log out users
