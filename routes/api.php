@@ -28,7 +28,6 @@ Route::group([
     "middleware" => ["auth:api"]
 ], function()
 {
-    Route::get('dashboard', [OnboardingController::class, 'profile']);
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
     Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
     Route::get('logout', [OnboardingController::class, 'logout']);

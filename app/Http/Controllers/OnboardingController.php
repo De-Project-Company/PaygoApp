@@ -109,14 +109,18 @@ class OnboardingController extends Controller
         return $this->service->verifyEmail($request->email, $request->token);
     }
 
-    //this will log out users
-    public function logout(Request $request)
+    /**
+     * 
+     * Log Out Method
+     * 
+     */
+    public function logout()
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('login')
-            ->withSuccess('You have logged out successfully!');
+        auth()->logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User logged out successfully!'
+        ]);
     }
 
     //sends mail containing reset password link
