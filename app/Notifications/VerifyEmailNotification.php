@@ -40,9 +40,7 @@ class VerifyEmailNotification extends Notification
                     ->subject('Verify Email Address')
                     ->line('Thank you for registering with PayGo! To complete your registration, please verify your email address by clicking the link below:')
                     ->action('Verify Email', $this->url)
-                    ->line('If you did not request this verification, please ignore this email. Your account will remain inactive until you verify your email address.')
-                    ->line('Thank you!')
-                    ->line('PayGo Team');
+                    ->line('If you did not request this verification, please ignore this email. Your account will remain inactive until you verify your email address.');
     }
 
     /**
