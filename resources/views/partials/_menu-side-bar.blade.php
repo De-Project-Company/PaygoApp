@@ -62,7 +62,7 @@
                             src="{{asset('storage/images/payment-receipt-icon.svg')}}"
                             alt=""
                         />
-                        <a href="/payments-received" class="text-[14px]">Payments Received</a>
+                        <a href="/payments" class="text-[14px]">Payments Received</a>
                     </div>
 
                     <div class="flex flex-row justify-start py-1 items-center">
