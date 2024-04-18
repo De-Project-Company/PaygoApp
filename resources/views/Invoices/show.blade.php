@@ -5,6 +5,7 @@
     @include('components.invoice')
     <a href="/invoices/{{ $invoice->id }}/mail/ckamsi04@gmail.com">Mail Invoice</a>
     <a href="/invoices/{{ $invoice->id }}/edit">Edit</a>
+    <a href="/payments/{{ $invoice->id }}/create/cash">Pay Cash</a>
     <form action="/invoices/{{ $invoice->id }}" method="post">
         @csrf
         @method('DELETE')
