@@ -2,86 +2,125 @@
 
 namespace App\Http\Controllers;
 
+use App\Custom\Services\EmailVerificationService;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegistrationRequest;
+use App\Http\Requests\ResendEmailVerificationRequest;
+use App\Http\Requests\VerifyEmailRequest;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Validator;
 
 
 class OnboardingController extends Controller
 {
 
-    //This will validate, handle the email verification call, and store user
-    public function store(Request $request)
+    public function __construct(private EmailVerificationService $service)
     {
-        $formData = $request->validate([
-            "email" => ['required', 'email', Rule::unique('users', 'email')],
-            "phone_number" => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
-            "password" => 'required|confirmed|min:6'
-        ]);
-
-        $formData['password'] = Hash::make($request->password);
-        $user = User::create($formData);
-
-        event(new Registered($user));
-
-        auth()->login($user);
-        $request->session()->regenerate();
-
-        return redirect('/onboarding/verify');
+        //
     }
 
-    //this will come up after user has been stored, telling them to check their email for the verification link
-    // public function verify_email()
-    // {
-    //     return view('verify');
-    // }
-
-    //this will display the login form
-    public function showLoginForm()
+    /**
+     * 
+     * Register Method
+     * 
+     */
+    public function register(RegistrationRequest $request)
     {
-        return view('login');
-    }
+        $request['password'] = Hash::make($request->password);
+        $user = User::create($request->validated());
 
-    //this will validate users when they try to login user
-    public function authenticate(Request $request)
-    {
-        $formData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-        if(Auth::attempt($formData))
+        if($user)
         {
-            $request->session()->regenerate();
-            return redirect('/dashboard');
+            $this->service->sendVerificationLink($user);
+            $token = auth()->login($user);
+            return $this->responseWithToken($token, $user);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'An error occurred while trying to create user'
+            ], 500);
         }
-
-        return back()->withErrors([
-            'email' => 'Credentials do not match what is in our records!',
-        ])->onlyInput('email');
     }
 
-    //this will log out users
-    public function logout(Request $request)
+    /**
+     * 
+     * Returns JWT access token
+     * 
+     */
+    public function responseWithToken($token, $user)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('login')
-            ->withSuccess('You have logged out successfully!');
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'access_token' => $token,
+            'type' => 'bearer'
+        ]);
     }
 
-    //displays the forgot password view
-    public function forgotPasswordView() {
-        return view('resetpassword');
+    /**
+     * 
+     * Login Method
+     * 
+     */
+    public function login(LoginRequest $request)
+    {
+        $token = auth()->attempt($request->validated());
+
+        if($token)
+        {
+            return $this->responseWithToken($token, auth()->user());
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Invalid Credentials'
+            ], 401);
+        }
+    }
+
+    /**
+     * 
+     * Resend Email Verification Link
+     * 
+     */
+    public function resendEmailVerificationLink(ResendEmailVerificationRequest $request)
+    {
+        return $this->service->resendVerificationLink($request->email);
+    }
+
+    /**
+     * 
+     * Verify User Email
+     * 
+     */
+    public function verifyUserEmail(VerifyEmailRequest $request)
+    {
+        return $this->service->verifyEmail($request->email, $request->token);
+    }
+
+    /**
+     * 
+     * Log Out Method
+     * 
+     */
+    public function logout()
+    {
+        auth()->logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User logged out successfully!'
+        ]);
     }
 
     //sends mail containing reset password link
@@ -154,7 +193,7 @@ class OnboardingController extends Controller
             'email' => 'nullable|email',
             'phone_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
             'business_name' => 'nullable',
-            'company_email' => 'nullable|email|unique:users',
+            'company_email' => 'nullable|email',
         ]);
 
         /** @var \App\Models\User $user **/

@@ -1,0 +1,1 @@
+<img src="{{ asset($user->qr_code) }}" alt="QR Code">

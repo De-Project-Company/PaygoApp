@@ -170,6 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -186,6 +187,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Jwt' => Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     ])->toArray(),
 
 ];
