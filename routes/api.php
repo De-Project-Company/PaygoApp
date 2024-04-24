@@ -25,7 +25,8 @@ Route::post('auth/verify_user_email', [OnboardingController::class, 'verifyUserE
 Route::post('auth/resend_email_verification_link', [OnboardingController::class, 'resendEmailVerificationLink']);
 
 Route::group([
-    "middleware" => ["auth:api"]
+    'prefix' => 'v1',
+    'middleware' => ['auth:api']
 ], function()
 {
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
