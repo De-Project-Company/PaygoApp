@@ -1,5 +1,4 @@
 <x-layout>
     <x-slot name="title">PayGo - Dashboard</x-slot>
-    @include('partials._nav-menu')
-    @include('partials._menu-side-bar')
+    <h1 style="margin:auto; padding:40px; text-align:center; background-color:chocolate;">You are up!</h1>
 </x-layout>

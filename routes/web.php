@@ -33,6 +33,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
  *
  *  */
 
+ Route::get('/', function () {
+    return view('dashboard');
+});
+
 //displays the reset password view
 Route::get('/forgot-password', [OnboardingController::class, 'forgotPasswordView'])->name('forgot.password');
 
