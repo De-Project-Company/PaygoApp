@@ -19,10 +19,23 @@ use App\Http\Controllers\OnboardingController;
 //     return $request->user();
 // });
 
+
+
+
+//This is to test that the server works as it and it is up and running, send a request to /api to check if it is up
+Route::get('/', function () {
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Server is working'
+    ], 200);
+});
+
 Route::post('auth/register', [OnboardingController::class, 'register']);
 Route::post('auth/login', [OnboardingController::class, 'login']);
 Route::post('auth/verify_user_email', [OnboardingController::class, 'verifyUserEmail']);
 Route::post('auth/resend_email_verification_link', [OnboardingController::class, 'resendEmailVerificationLink']);
+
+
 
 Route::group([
     'prefix' => 'v1',
@@ -32,5 +45,7 @@ Route::group([
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
     Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
     Route::get('logout', [OnboardingController::class, 'logout']);
+
+
 
 });
