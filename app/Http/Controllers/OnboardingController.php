@@ -77,10 +77,18 @@ class OnboardingController extends Controller
     public function login(LoginRequest $request)
     {
         $token = auth()->attempt($request->validated());
+        $user = auth()->user();
 
         if($token)
         {
-            return $this->responseWithToken($token, auth()->user());
+            if($user->email_verified_at != NULL)
+            {
+                return $this->responseWithToken($token, auth()->user());
+            }
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Kindly Verify Your Email'
+            ], 401);
         } else {
             return response()->json([
                 'status' => 'failed',
