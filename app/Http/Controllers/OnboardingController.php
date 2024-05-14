@@ -183,11 +183,6 @@ class OnboardingController extends Controller
         return redirect()->to(route('login'))->with('success', 'Password reset successfully!');
     }
 
-    public function editBusiness()
-    {
-        return view('editbusiness');
-    }
-
     public function updateBusiness(Request $request) 
     {
         $user = Auth::user();

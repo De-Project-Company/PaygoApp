@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Profile\PasswordController;
+use App\Http\Controllers\Api\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OnboardingController;
 
@@ -29,6 +30,7 @@ Route::group([
     'middleware' => ['auth:api']
 ], function()
 {
+    Route::get('update-profile', [ProfileController::class, 'updateProfile']);
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
     Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
     Route::get('logout', [OnboardingController::class, 'logout']);
