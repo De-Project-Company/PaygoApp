@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -21,12 +23,14 @@ class ProfileController extends Controller
         }
 
         /** @var \App\Models\User $user **/
-        $updateProfile = $user->update([$request->validated()]);
+        $updateProfile = $user->update($request->validated());
+
 
         if($updateProfile)
         {
             return response()->json([
                 'status' => 'success',
+                'user' => $user,
                 'message' => 'Profile has been updated successfully'
             ]);
         } else

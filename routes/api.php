@@ -30,7 +30,7 @@ Route::group([
     'middleware' => ['auth:api']
 ], function()
 {
-    Route::get('update-profile', [ProfileController::class, 'updateProfile']);
+    Route::put('update-profile', [ProfileController::class, 'updateProfile']);
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
     Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
     Route::get('logout', [OnboardingController::class, 'logout']);

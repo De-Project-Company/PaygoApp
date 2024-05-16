@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
@@ -27,7 +26,7 @@ class UpdateProfileRequest extends FormRequest
             'email' => 'nullable|email',
             'phone_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
             'business_name' => 'nullable',
-            'company_email' => 'nullable|email',
+            'company_email' => 'nullable|email'
         ];
     }
 }
