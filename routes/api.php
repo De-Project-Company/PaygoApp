@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\Profile\PasswordController;
-use App\Http\Controllers\Api\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\Api\Profile\ProfileController;
+use App\Http\Controllers\Api\Profile\PasswordController;
+use App\Http\Controllers\Api\Profile\QrCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,8 @@ Route::group([
     'middleware' => ['auth:api']
 ], function()
 {
-    Route::put('update-profile', [ProfileController::class, 'updateProfile']);
+    Route::put('update_profile', [ProfileController::class, 'updateProfile']);
+    Route::put('generate_qrcode', [QrCodeController::class, 'generateQrCode']);
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
     Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
     Route::get('logout', [OnboardingController::class, 'logout']);
