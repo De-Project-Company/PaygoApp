@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use App\Notifications\VerifyApiEmailNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -20,9 +23,22 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'google_id',
         'phone_number',
+        'email_verified_at',
+        'business_name',
+        'business_address',
+        'company_email',
+        'remember_token',
+        'created_at',
+        'updated_at',
         'password',
         'facebook_id',
+        'bank_name',
+        'account_name',
+        'account_number',
+        'qr_code_data',
+        'qr_code',
     ];
 
     /**
@@ -44,4 +60,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getJWTIdentifier()
+    {
+      return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+      return [];
+    }
 }

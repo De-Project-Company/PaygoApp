@@ -62,7 +62,35 @@
                             src="{{asset('storage/images/payment-receipt-icon.svg')}}"
                             alt=""
                         />
-                        <a href="/payments-received" class="text-[14px]">Payments Received</a>
+                        <a href="/payments" class="text-[14px]">Payments Received</a>
+                    </div>
+
+                    <div class="flex flex-row justify-start py-1 items-center">
+                        <img
+                            class="w-[23px] h-[23px] mr-[7px]"
+                            src="{{asset('storage/images/payment-receipt-icon.svg')}}"
+                            alt=""
+                        />
+                        <a href="{{ route('edit.business') }}" class="text-[14px]">Manage Business</a>
+                    </div>
+
+                    <div class="flex flex-row justify-start py-1 items-center">
+                        <img
+                            class="w-[23px] h-[23px] mr-[7px]"
+                            src="{{asset('storage/images/payment-receipt-icon.svg')}}"
+                            alt=""
+                        />
+                        <a href="{{ route('qrcode.form') }}" class="text-[14px]">Generate QR Code</a>
+                    </div>
+
+                    <div class="flex flex-row justify-start py-1 items-center">
+                        <img
+                            class="w-[23px] h-[23px] mr-[7px]"
+                            src="{{asset('storage/images/payment-receipt-icon.svg')}}"
+                            alt=""
+                        />
+                        <a href="{{ route('show.qrcode') }}" class="btn btn-primary">View QR Code</a>
+
                     </div>
 
 

@@ -90,22 +90,29 @@
             </div>
             <div class="flex justify-center">
           <span
-              class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center"
-          >
+              class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center">
             <img src="{{asset('storage/images/apple.svg')}}" alt="" />
           </span>
-
+        <form class="d-inline" method="GET" action="{{ route('google.login') }}">
+            @csrf
+            <label>
                 <span
-                    class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center"
-                >
-            <img src="{{asset('storage/images/google.svg')}}" alt="" />
-          </span>
-
+                    class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center">
+                    <input type="submit" style="display: none;">
+                    <img src="{{asset('storage/images/google.svg')}}" alt="" />
+                </span>
+            </label>
+        </form>
+        <form class="d-inline" method="GET" action="{{ route('facebook.login') }}">
+            @csrf
+            <label>
                 <span
-                    class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center"
-                >
-            <img src="{{asset('storage/images/facebook.svg')}}" alt="" />
-          </span>
+                    class="border mx-2 border-[#9E8BBD] w-[61px] h-[61px] rounded-full flex justify-center items-center">
+                    <input type="submit" style="display: none;">
+                    <img src="{{asset('storage/images/facebook.svg')}}" alt="" />
+                </span>
+            </label>
+        </form>
             </div>
             <p class="text-[#5E91E6] mt-7">
                 Already have an account?

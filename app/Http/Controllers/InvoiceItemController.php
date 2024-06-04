@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class FacebookController extends Controller
+class InvoiceItemController extends Controller
 {
     //
 }
