@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*', 'http://localhost/*', 'https://localhost/*'],
 
     'allowed_origins_patterns' => ['/^http:\/\/localhost:\d+$/'],
 
@@ -27,7 +27,7 @@ return [
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 60,
 
     'supports_credentials' => false,
 
