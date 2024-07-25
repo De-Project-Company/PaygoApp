@@ -18,7 +18,7 @@ class QrCodeController extends Controller
         //
     } 
 
-    public function generateQrCode(QrCodeRequest $request) 
+    public function generateQrCode(QrCodeRequest $request)
     {
         return $this->service->generateQrCode($request->validated());
     }
