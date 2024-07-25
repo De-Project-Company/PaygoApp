@@ -17,10 +17,6 @@ use App\Http\Controllers\Api\Profile\QrCodeController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::post('auth/register', [OnboardingController::class, 'register']);
 Route::post('auth/login', [OnboardingController::class, 'login']);
 Route::post('auth/verify_user_email', [OnboardingController::class, 'verifyUserEmail']);
@@ -32,6 +28,7 @@ Route::group([
 ], function()
 {
     Route::put('update_profile', [ProfileController::class, 'updateProfile']);
+    Route::post('profile/upload_picture', [ProfileController::class, 'uploadProfilePicture']);
     Route::put('generate_qrcode', [QrCodeController::class, 'generateQrCode']);
     Route::get('refresh-token', [OnboardingController::class, 'refreshToken']);
     Route::post('/change_password', [PasswordController::class, 'changeUserPassword']);
