@@ -2,14 +2,31 @@
 
 namespace App\Http\Controllers\Api\Profile;
 
+use App\Custom\Services\ProfilePictureUploadService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UploadProfilePictureRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    /**
+     * 
+     * Constructor
+     * 
+     */
+    public function __construct(private ProfilePictureUploadService $service)
+    {
+        //
+    }
+
+    /**
+     * 
+     * Update User Profile Method
+     * 
+     */
     public function updateProfile(UpdateProfileRequest $request)
     {
         $user = auth()->user();
@@ -40,5 +57,15 @@ class ProfileController extends Controller
                 'message' => 'An error occurred while trying to update profile'
             ],500);
         }
+    }
+
+    /**
+     * 
+     * Upload/Update Profile Picture Method
+     * 
+     */
+    public function uploadProfilePicture(UploadProfilePictureRequest $request)
+    {
+        return $this->service->uploadProfilePicture($request);
     }
 }
