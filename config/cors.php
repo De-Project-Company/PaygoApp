@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*', 'http://localhost:5174', 'http://localhost:5173', 'https://paygo-startershouse.vercel.app/', 'https://paygo-startershouse.vercel.app/*'],
+    'allowed_origins' => ['*', 'http://localhost:5174', 'http://localhost:5173', 'http://localhost:5176', 'https://paygo-startershouse.vercel.app/', 'https://paygo-startershouse.vercel.app/*'],
 
     'allowed_origins_patterns' => ['/^http:\/\/localhost:\d+$/'],
 
