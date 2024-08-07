@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [],
+    'allowed_origins' => ['*', 'http://localhost:5174', 'http://localhost:5173', 'http://localhost:5176', 'https://paygo-startershouse.vercel.app/', 'https://paygo-startershouse.vercel.app/*'],
 
     'allowed_origins_patterns' => ['/^http:\/\/localhost:\d+$/'],
 
@@ -27,8 +27,8 @@ return [
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 60,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];
