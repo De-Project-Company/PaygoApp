@@ -21,6 +21,11 @@ class QrCodeService
             ], 403);
         }
 
+        // Deletes existing qr_code (if it exists)
+        if ($user->qr_code) {
+            Storage::disk('public')->delete($user->qr_code);
+        }
+
         $qrCodeData = "Bank Name: {$data['bank_name']}\nAccount Name: {$data['account_name']}\nAccount Number: {$data['account_number']}";
         $fileName = 'qrcode_' . $user->id . '.png';
         $filePath = 'qrcodes/' . $fileName;
