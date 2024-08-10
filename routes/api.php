@@ -32,6 +32,8 @@ Route::post('auth/register', [OnboardingController::class, 'register']);
 Route::post('auth/login', [OnboardingController::class, 'login']);
 Route::post('auth/verify_user_email', [OnboardingController::class, 'verifyUserEmail']);
 Route::post('auth/resend_email_verification_link', [OnboardingController::class, 'resendEmailVerificationLink']);
+Route::post('auth/password/reset_password_request', [PasswordController::class, 'sendPasswordResetLink']);
+Route::post('auth/password/reset_password', [PasswordController::class, 'resetPassword']);
 
 
 
