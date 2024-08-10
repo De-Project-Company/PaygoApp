@@ -38,13 +38,11 @@ class ResetPasswordNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Password Reset Request for Your Account')
-                    ->line('Hello ' . $notifiable->business_name)
+                    ->line($notifiable->business_name)
                     ->line('We received a request to reset the password for your account associated with this email address. If you made this request, please click the link below to reset your password:')
                     ->action('Reset Password', $this->url)
                     ->line('If you did not request a password reset, please ignore this email or contact our support team if you have any concerns.
-                    For your security, this link will expire in 60 minutes.')
-                    ->line('Important Notes: If you can\'t click the link, copy and paste the following URL into your browser: '. $this->url.
-                    'For security reasons, never share your password with anyone.');
+                    For your security, this link will expire in 60 minutes.');
     }
 
     /**

@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Api\Profile;
 
-use App\Custom\Services\PasswordService;
+use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Custom\Services\PasswordService;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UpdatePasswordRequest;
-use App\Http\Requests\VerifyResetPasswordTokenRequest;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class PasswordController extends Controller
 {
@@ -25,7 +23,7 @@ class PasswordController extends Controller
 
     /**
      * 
-     * Send Password Reset Link
+     * Sends Password Reset Link
      * 
      */
     public function sendPasswordResetLink(ResetPasswordRequest $request)
@@ -50,13 +48,11 @@ class PasswordController extends Controller
 
     /**
      * 
-     * Change Password
+     * Changes Password
      * 
      */
     public function changeUserPassword(ChangePasswordRequest $request)
     {
         return $this->service->changePassword($request->validated());
     }
-
-
 }
